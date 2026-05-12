@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { SENIORITY } from "@/constants/seniority";
+import { STACK } from "@/constants/stack";
 import { useActiveListingStore } from "@/store/active-listing-store";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -18,30 +20,26 @@ export default function SearchFilters() {
   }
 
   return (
-    <div className="flex w-full bg-secondary pb-10 mb-2">
-      <div>
-        {["junior", "mid", "senior"].map((level) => (
+    <div className="flex w-full bg-secondary justify-between">
+      <div className="flex gap-2">
+        {SENIORITY.map((level) => (
           <Button
             key={level}
+            variant={searchParams.get("level") === level ? "default" : "ghost"}
             onClick={() => navigate("level", level)}
-            style={{
-              fontWeight:
-                searchParams.get("level") === level ? "bold" : "normal",
-            }}
+            className="capitalize"
           >
             {level}
           </Button>
         ))}
       </div>
-      <div>
-        {["frontend", "backend", "fullstack"].map((stack) => (
+      <div className="flex gap-2">
+        {STACK.map((stack) => (
           <Button
             key={stack}
+            variant={searchParams.get("stack") === stack ? "default" : "ghost"}
             onClick={() => navigate("stack", stack)}
-            style={{
-              fontWeight:
-                searchParams.get("stack") === stack ? "bold" : "normal",
-            }}
+            className="capitalize"
           >
             {stack}
           </Button>
