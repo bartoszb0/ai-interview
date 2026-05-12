@@ -1,4 +1,5 @@
 import { Job } from "@/types/job";
+import { redirect } from "next/navigation";
 import ActiveListing from "./ActiveListing";
 import JobListing from "./JobListing";
 import PaginationControls from "./PaginationControls";
@@ -26,17 +27,11 @@ export default async function JobsList({ level, stack, page }: JobsListProps) {
   const data = await res.json();
 
   const totalPages = Math.ceil(data.totalCount / data.limit);
-
-  if (page > totalPages) {
-    params.set("page", String(totalPages));
-    const retryRes = await fetch(
-      `https://himalayas.app/jobs/api/search?${params.toString()}`,
-    );
-    const retryData = await retryRes.json();
-    data.jobs = retryData.jobs;
-  }
-
   const safePage = Math.min(Math.max(page, 1), totalPages);
+
+  if (page !== safePage) {
+    redirect(`?level=${level}&stack=${stack}&page=${safePage}`);
+  }
 
   return (
     <div className="mt-6">
