@@ -9,18 +9,20 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function SearchFilters() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const reset = useActiveListingStore((state) => state.reset);
+  const resetActiveListing = useActiveListingStore(
+    (state) => state.resetActiveListing,
+  );
 
   function navigate(key: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
     params.set(key, value);
     params.set("page", "1");
-    reset();
+    resetActiveListing();
     router.push(`?${params.toString()}`);
   }
 
   return (
-    <div className="flex flex-col   w-full bg-secondary">
+    <div>
       <div className="flex gap-2 justify-center">
         {SENIORITY.map((level) => (
           <Button
