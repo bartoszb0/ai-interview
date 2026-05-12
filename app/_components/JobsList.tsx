@@ -12,7 +12,7 @@ type JobsListProps = {
 export default async function JobsList({ level, stack, page }: JobsListProps) {
   const params = new URLSearchParams();
   const seniorityMap: Record<string, string> = {
-    entry: "Entry-level",
+    junior: "Entry-level",
     mid: "Mid-level",
     senior: "Senior",
   };
