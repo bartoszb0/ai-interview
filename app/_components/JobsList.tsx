@@ -18,7 +18,7 @@ export default async function JobsList({ level, stack, page }: JobsListProps) {
   };
   if (level) params.set("seniority", seniorityMap[level] ?? level);
   if (stack) params.set("q", stack);
-  params.set("page", String(page));
+  params.set("page", String(Math.max(page, 1)));
 
   const res = await fetch(
     `https://himalayas.app/jobs/api/search?${params.toString()}`,
@@ -26,6 +26,17 @@ export default async function JobsList({ level, stack, page }: JobsListProps) {
   const data = await res.json();
 
   const totalPages = Math.ceil(data.totalCount / data.limit);
+
+  if (page > totalPages) {
+    params.set("page", String(totalPages));
+    const retryRes = await fetch(
+      `https://himalayas.app/jobs/api/search?${params.toString()}`,
+    );
+    const retryData = await retryRes.json();
+    data.jobs = retryData.jobs;
+  }
+
+  const safePage = Math.min(Math.max(page, 1), totalPages);
 
   return (
     <div className="mt-6">
@@ -42,7 +53,7 @@ export default async function JobsList({ level, stack, page }: JobsListProps) {
         <ActiveListing />
       </div>
       <PaginationControls
-        currentPage={page}
+        currentPage={safePage}
         totalPages={totalPages}
         level={level}
         stack={stack}
