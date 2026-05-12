@@ -1,7 +1,32 @@
-export default function Home() {
+import { Suspense } from "react";
+import JobListSkeleton from "./_components/JobListSkeleton";
+import JobsList from "./_components/JobsList";
+import NoFiltersSelected from "./_components/NoFilters";
+import SearchFilters from "./_components/SearchFilters";
+
+type PageProps = {
+  searchParams: Promise<{ level: string; stack: string; page?: string }>;
+};
+
+export default async function Home({ searchParams }: PageProps) {
+  const { level, stack, page } = await searchParams;
+  const currentPage = Number(page) || 1;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start"></main>
+    <div className="flex flex-col items-center">
+      <SearchFilters />
+      <div className="w-full max-w-6xl px-12">
+        {level && stack ? (
+          <Suspense
+            fallback={<JobListSkeleton />}
+            key={`${level}-${stack}-${currentPage}`}
+          >
+            <JobsList level={level} stack={stack} page={currentPage} />
+          </Suspense>
+        ) : (
+          <NoFiltersSelected />
+        )}
+      </div>
     </div>
   );
 }
