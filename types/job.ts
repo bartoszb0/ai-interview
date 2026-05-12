@@ -1,0 +1,21 @@
+export type Job = {
+  guid: string;
+  title: string;
+  excerpt: string;
+  description: string;
+  applicationLink: string;
+  employmentType: string;
+  seniority: string[];
+  categories: string[];
+  parentCategories: string[];
+  companyName: string;
+  companySlug: string;
+  companyLogo: string;
+  minSalary: number | null;
+  maxSalary: number | null;
+  currency: string;
+  locationRestrictions: string[];
+  timezoneRestrictions: number[];
+  pubDate: number;
+  expiryDate: number;
+};
