@@ -12,7 +12,7 @@ function FlickeringCount() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCount(Math.floor(Math.random() * 900) + 100);
-    }, 150);
+    }, 10);
     return () => clearInterval(interval);
   }, []);
 
