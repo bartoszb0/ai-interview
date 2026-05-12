@@ -7,9 +7,11 @@ export default function NoFiltersSelected() {
         <SlidersHorizontal className="w-6 h-6 text-muted-foreground" />
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-base font-medium text-foreground">No filters selected</p>
+        <p className="text-base font-medium text-foreground">
+          No filters selected
+        </p>
         <p className="text-sm text-muted-foreground">
-          Pick a seniority level and a tech stack to browse job listings.
+          Pick a seniority level and a tech role to browse job listings.
         </p>
       </div>
     </div>

@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { ROLE } from "@/constants/role";
 import { SENIORITY } from "@/constants/seniority";
-import { STACK } from "@/constants/stack";
 import { useActiveListingStore } from "@/store/active-listing-store";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -34,14 +34,14 @@ export default function SearchFilters() {
         ))}
       </div>
       <div className="flex gap-2">
-        {STACK.map((stack) => (
+        {ROLE.map((role) => (
           <Button
-            key={stack}
-            variant={searchParams.get("stack") === stack ? "default" : "ghost"}
-            onClick={() => navigate("stack", stack)}
+            key={role}
+            variant={searchParams.get("role") === role ? "default" : "ghost"}
+            onClick={() => navigate("role", role)}
             className="capitalize"
           >
-            {stack}
+            {role}
           </Button>
         ))}
       </div>

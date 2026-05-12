@@ -8,15 +8,15 @@ import PaginationControls from "./PaginationControls";
 
 type JobsListProps = {
   level: string;
-  stack: string;
+  role: string;
   page: number;
 };
 
-export default async function JobsList({ level, stack, page }: JobsListProps) {
+export default async function JobsList({ level, role, page }: JobsListProps) {
   let data: JobsResponse;
 
   try {
-    data = await fetchJobs(level, stack, page);
+    data = await fetchJobs(level, role, page);
   } catch {
     return (
       <div className="mt-6 text-center text-muted-foreground">
@@ -29,7 +29,7 @@ export default async function JobsList({ level, stack, page }: JobsListProps) {
   const safePage = Math.min(Math.max(page, 1), totalPages);
 
   if (page !== safePage) {
-    redirect(`?level=${level}&stack=${stack}&page=${safePage}`);
+    redirect(`?level=${level}&role=${role}&page=${safePage}`);
   }
 
   return (
@@ -50,7 +50,7 @@ export default async function JobsList({ level, stack, page }: JobsListProps) {
         currentPage={safePage}
         totalPages={totalPages}
         level={level}
-        stack={stack}
+        role={role}
       />
     </div>
   );

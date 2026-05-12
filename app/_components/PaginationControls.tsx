@@ -12,18 +12,18 @@ type PaginationControlsProps = {
   currentPage: number;
   totalPages: number;
   level: string;
-  stack: string;
+  role: string;
 };
 
-function pageUrl(page: number, level: string, stack: string) {
-  return `?level=${level}&stack=${stack}&page=${page}`;
+function pageUrl(page: number, level: string, role: string) {
+  return `?level=${level}&role=${role}&page=${page}`;
 }
 
 export default function PaginationControls({
   currentPage,
   totalPages,
   level,
-  stack,
+  role,
 }: PaginationControlsProps) {
   const pages: (number | "ellipsis")[] = [];
 
@@ -32,7 +32,11 @@ export default function PaginationControls({
   } else {
     pages.push(1);
     if (currentPage > 3) pages.push("ellipsis");
-    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+    for (
+      let i = Math.max(2, currentPage - 1);
+      i <= Math.min(totalPages - 1, currentPage + 1);
+      i++
+    ) {
       pages.push(i);
     }
     if (currentPage < totalPages - 2) pages.push("ellipsis");
@@ -44,9 +48,15 @@ export default function PaginationControls({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href={currentPage > 1 ? pageUrl(currentPage - 1, level, stack) : undefined}
+            href={
+              currentPage > 1
+                ? pageUrl(currentPage - 1, level, role)
+                : undefined
+            }
             aria-disabled={currentPage === 1}
-            className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+            className={
+              currentPage === 1 ? "pointer-events-none opacity-50" : ""
+            }
           />
         </PaginationItem>
 
@@ -57,18 +67,27 @@ export default function PaginationControls({
             </PaginationItem>
           ) : (
             <PaginationItem key={p}>
-              <PaginationLink href={pageUrl(p, level, stack)} isActive={p === currentPage}>
+              <PaginationLink
+                href={pageUrl(p, level, role)}
+                isActive={p === currentPage}
+              >
                 {p}
               </PaginationLink>
             </PaginationItem>
-          )
+          ),
         )}
 
         <PaginationItem>
           <PaginationNext
-            href={currentPage < totalPages ? pageUrl(currentPage + 1, level, stack) : undefined}
+            href={
+              currentPage < totalPages
+                ? pageUrl(currentPage + 1, level, role)
+                : undefined
+            }
             aria-disabled={currentPage === totalPages}
-            className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+            className={
+              currentPage === totalPages ? "pointer-events-none opacity-50" : ""
+            }
           />
         </PaginationItem>
       </PaginationContent>

@@ -5,23 +5,23 @@ import NoFiltersSelected from "./_components/NoFilters";
 import SearchFilters from "./_components/SearchFilters";
 
 type PageProps = {
-  searchParams: Promise<{ level: string; stack: string; page?: string }>;
+  searchParams: Promise<{ level: string; role: string; page?: string }>;
 };
 
 export default async function Home({ searchParams }: PageProps) {
-  const { level, stack, page } = await searchParams;
+  const { level, role, page } = await searchParams;
   const currentPage = Number(page) || 1;
 
   return (
     <div className="flex flex-col items-center">
       <SearchFilters />
       <div className="w-full max-w-6xl px-12">
-        {level && stack ? (
+        {level && role ? (
           <Suspense
             fallback={<JobListSkeleton />}
-            key={`${level}-${stack}-${currentPage}`}
+            key={`${level}-${role}-${currentPage}`}
           >
-            <JobsList level={level} stack={stack} page={currentPage} />
+            <JobsList level={level} role={role} page={currentPage} />
           </Suspense>
         ) : (
           <NoFiltersSelected />
