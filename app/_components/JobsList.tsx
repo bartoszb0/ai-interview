@@ -1,4 +1,6 @@
+import { fetchJobs } from "@/lib/api";
 import { Job } from "@/types/job";
+import { JobsResponse } from "@/types/jobResponse";
 import { redirect } from "next/navigation";
 import ActiveListing from "./ActiveListing";
 import JobListing from "./JobListing";
@@ -11,20 +13,17 @@ type JobsListProps = {
 };
 
 export default async function JobsList({ level, stack, page }: JobsListProps) {
-  const params = new URLSearchParams();
-  const seniorityMap: Record<string, string> = {
-    junior: "Entry-level",
-    mid: "Mid-level",
-    senior: "Senior",
-  };
-  if (level) params.set("seniority", seniorityMap[level] ?? level);
-  if (stack) params.set("q", stack);
-  params.set("page", String(Math.max(page, 1)));
+  let data: JobsResponse;
 
-  const res = await fetch(
-    `https://himalayas.app/jobs/api/search?${params.toString()}`,
-  );
-  const data = await res.json();
+  try {
+    data = await fetchJobs(level, stack, page);
+  } catch {
+    return (
+      <div className="mt-6 text-center text-muted-foreground">
+        Failed to load job listings. Please try again.
+      </div>
+    );
+  }
 
   const totalPages = Math.ceil(data.totalCount / data.limit);
   const safePage = Math.min(Math.max(page, 1), totalPages);
@@ -39,7 +38,7 @@ export default async function JobsList({ level, stack, page }: JobsListProps) {
         <span className="text-4xl font-bold">Job Listings</span>
         <span className="text-md">Found {data.totalCount} jobs</span>
       </div>
-      <div className="flex">
+      <div className="flex items-start">
         <div className="flex flex-col flex-1 gap-4 min-w-0">
           {data.jobs.map((job: Job) => (
             <JobListing key={job.guid} job={job} />
