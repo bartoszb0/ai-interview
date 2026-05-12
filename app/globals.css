@@ -3,6 +3,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --scrollbar-thumb: oklch(0 0 0 / 0.15);
   --background: oklch(0.994 0 0);
   --foreground: oklch(0 0 0);
   --card: oklch(0.994 0 0);
@@ -62,6 +63,7 @@
 }
 
 .dark {
+  --scrollbar-thumb: oklch(1 0 0 / 0.15);
   --background: oklch(0.2223 0.006 271.1393);
   --foreground: oklch(0.9551 0 0);
   --card: oklch(0.2568 0.0076 274.6528);
@@ -190,5 +192,10 @@
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+
+  .scrollbar-minimal {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
   }
 }
