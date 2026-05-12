@@ -11,15 +11,15 @@ export default function ActiveListing() {
     <>
       {/* Desktop sticky side panel */}
       <div
-        className={`hidden md:block shrink-0 sticky top-6 self-start transition-all duration-300 ${
+        className={`hidden lg:block shrink-0 sticky top-6 self-start transition-all duration-300 ${
           activeListing
             ? "w-96 opacity-100 ml-6"
             : "w-0 opacity-0 pointer-events-none"
         }`}
       >
         {activeListing && (
-          <div className="flex flex-col gap-4 w-96 max-h-[calc(100vh-3rem)] overflow-y-auto scrollbar-minimal">
-            <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-4 w-96 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-minimal">
+            <div className="flex items-cente sticky justify-between">
               <span className="font-semibold text-foreground">
                 {activeListing.companyName}
               </span>
@@ -31,6 +31,7 @@ export default function ActiveListing() {
               className="prose prose-sm prose-invert max-w-none text-muted-foreground"
               dangerouslySetInnerHTML={{ __html: activeListing.description }}
             />
+            <Button size="lg">Start AI Interview</Button>
           </div>
         )}
       </div>
@@ -38,14 +39,14 @@ export default function ActiveListing() {
       {/* Mobile backdrop */}
       {activeListing && (
         <div
-          className="md:hidden fixed inset-0 bg-black/40 z-40"
+          className="lg:hidden fixed inset-0 bg-black/40 z-40"
           onClick={reset}
         />
       )}
 
       {/* Mobile bottom sheet */}
       <div
-        className={`md:hidden fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 ${
+        className={`lg:hidden fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 ${
           activeListing ? "translate-y-0" : "translate-y-full"
         }`}
       >
@@ -66,6 +67,7 @@ export default function ActiveListing() {
               className="overflow-y-auto px-6 pb-6 prose prose-sm prose-invert max-w-none text-muted-foreground scrollbar-minimal"
               dangerouslySetInnerHTML={{ __html: activeListing.description }}
             />
+            <Button size="lg">Start AI Interview</Button>
           </div>
         )}
       </div>

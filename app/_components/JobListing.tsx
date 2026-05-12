@@ -22,11 +22,11 @@ export default function JobListing({ job }: JobListingProps) {
   return (
     <>
       <Card
-        className={`px-8 h-28 cursor-pointer transition-all hover:ring-primary/50 hover:shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_15%,transparent)] ${isActive ? "ring-primary shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_15%,transparent)]" : ""}`}
+        className={`px-6 py-4 min-h-24 md:px-8 md:py-0 md:h-28 cursor-pointer transition-all hover:ring-primary/50 hover:shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_15%,transparent)] ${isActive ? "ring-primary shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_15%,transparent)]" : ""}`}
         onClick={() => setActiveListing(job)}
       >
-        <div className="flex h-full gap-6 items-center">
-          <div className="flex shrink-0 items-center justify-center w-16 h-16 rounded-lg bg-muted overflow-hidden">
+        <div className="flex gap-4 items-center md:gap-6 md:h-full">
+          <div className="flex shrink-0 items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-lg bg-muted overflow-hidden">
             {job.companyLogo ? (
               <Image
                 src={job.companyLogo}
@@ -39,11 +39,11 @@ export default function JobListing({ job }: JobListingProps) {
               <Building2 className="w-7 h-7 text-muted-foreground" />
             )}
           </div>
-          <div>
-            <h2 className="text-lg font-semibold text-foreground leading-snug">
+          <div className="min-w-0">
+            <h2 className="text-base font-semibold text-foreground leading-snug line-clamp-2 md:text-lg md:line-clamp-none">
               {job.title}
             </h2>
-            <div className="flex gap-4 mt-2">
+            <div className="flex flex-wrap gap-2 mt-2 md:flex-nowrap md:gap-4">
               <Badge
                 variant={
                   job.minSalary && job.maxSalary ? "default" : "destructive"
