@@ -22,7 +22,7 @@ export default function JobListing({ job }: JobListingProps) {
   return (
     <>
       <Card
-        className={`px-6 py-4 min-h-24 md:px-8 md:py-0 md:h-28 cursor-pointer transition-all hover:ring-primary/50 hover:shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_15%,transparent)] ${isActive ? "ring-primary shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_15%,transparent)]" : ""}`}
+        className={`px-6 py-0 min-h-24 justify-center md:px-8 md:h-28 cursor-pointer transition-all hover:ring-primary/50 hover:shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_15%,transparent)] ${isActive ? "ring-primary shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_15%,transparent)]" : ""}`}
         onClick={() => setActiveListing(job)}
       >
         <div className="flex gap-4 items-center md:gap-6 md:h-full">

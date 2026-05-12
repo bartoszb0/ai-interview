@@ -20,8 +20,8 @@ export default function SearchFilters() {
   }
 
   return (
-    <div className="flex w-full bg-secondary justify-between">
-      <div className="flex gap-2">
+    <div className="flex flex-col   w-full bg-secondary">
+      <div className="flex gap-2 justify-center">
         {SENIORITY.map((level) => (
           <Button
             key={level}
@@ -33,7 +33,7 @@ export default function SearchFilters() {
           </Button>
         ))}
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 justify-center">
         {ROLE.map((role) => (
           <Button
             key={role}
