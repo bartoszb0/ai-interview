@@ -39,7 +39,7 @@ export default function SearchFilters() {
         value={searchParams.get("seniority") ?? ""}
         onValueChange={(value) => navigate("seniority", value)}
       >
-        <SelectTrigger className="w-[140px] rounded-none capitalize">
+        <SelectTrigger className="w-[140px] rounded-none capitalize border border-primary/50">
           <SelectValue placeholder="Seniority" />
         </SelectTrigger>
         <SelectContent className="rounded-none">
@@ -57,7 +57,7 @@ export default function SearchFilters() {
         value={searchParams.get("role") ?? ""}
         onValueChange={(value) => navigate("role", value)}
       >
-        <SelectTrigger className="w-[140px] rounded-none capitalize">
+        <SelectTrigger className="w-[140px] rounded-none capitalize border border-primary/50">
           <SelectValue placeholder="Role" />
         </SelectTrigger>
         <SelectContent className="rounded-none">
@@ -75,7 +75,7 @@ export default function SearchFilters() {
         value={searchParams.get("country") ?? ""}
         onValueChange={(value) => navigate("country", value)}
       >
-        <SelectTrigger className="w-[160px] rounded-none">
+        <SelectTrigger className="w-[140px] rounded-none capitalize border border-primary/50">
           <SelectValue placeholder="Country" />
         </SelectTrigger>
         <SelectContent className="rounded-none">
