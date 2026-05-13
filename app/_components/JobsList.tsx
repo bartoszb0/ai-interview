@@ -4,6 +4,7 @@ import { JobsResponse } from "@/types/jobResponse";
 import { redirect } from "next/navigation";
 import ActiveListing from "./ActiveListing";
 import JobListing from "./JobListing";
+import ListingsHeader from "./ListingsHeader";
 import PaginationControls from "./PaginationControls";
 
 type JobsListProps = {
@@ -35,17 +36,18 @@ export default async function JobsList({
   const safePage = Math.min(Math.max(page, 1), totalPages);
 
   if (page !== safePage) {
-    const params = new URLSearchParams({ seniority, role, page: String(safePage) });
+    const params = new URLSearchParams({
+      seniority,
+      role,
+      page: String(safePage),
+    });
     if (country) params.set("country", country);
     redirect(`?${params.toString()}`);
   }
 
   return (
     <div className="mt-6">
-      <div className="flex flex-col text-center mb-8">
-        <span className="text-4xl font-bold">Job Listings</span>
-        <span className="text-md">Found {data.totalCount} jobs</span>
-      </div>
+      <ListingsHeader totalCount={data.totalCount} />
       <div className="flex items-start">
         <div className="flex flex-col flex-1 gap-4 min-w-0">
           {data.jobs.map((job: Job) => (
