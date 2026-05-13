@@ -23,7 +23,11 @@ export default function SearchFilters() {
 
   function navigate(key: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
-    params.set(key, value);
+    if (value === "__clear__") {
+      params.delete(key);
+    } else {
+      params.set(key, value);
+    }
     params.set("page", "1");
     resetActiveListing();
     router.push(`?${params.toString()}`);
@@ -76,6 +80,7 @@ export default function SearchFilters() {
         </SelectTrigger>
         <SelectContent className="rounded-none">
           <SelectGroup>
+            <SelectItem value="__clear__">All</SelectItem>
             {COUNTRY.map(({ label, value }) => (
               <SelectItem key={value} value={value}>
                 {label}
