@@ -1,0 +1,16 @@
+export const COUNTRY: { label: string; value: string }[] = [
+  { label: "United States", value: "US" },
+  { label: "United Kingdom", value: "GB" },
+  { label: "Canada", value: "CA" },
+  { label: "Germany", value: "DE" },
+  { label: "France", value: "FR" },
+  { label: "Netherlands", value: "NL" },
+  { label: "Poland", value: "PL" },
+  { label: "Australia", value: "AU" },
+  { label: "India", value: "IN" },
+  { label: "Brazil", value: "BR" },
+  { label: "Portugal", value: "PT" },
+  { label: "Spain", value: "ES" },
+  { label: "Sweden", value: "SE" },
+  { label: "Switzerland", value: "CH" },
+];
