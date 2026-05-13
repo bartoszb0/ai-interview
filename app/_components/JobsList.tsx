@@ -28,8 +28,16 @@ export default async function JobsList({
     data = await fetchJobs(seniority, role, page, country, sort);
   } catch {
     return (
-      <div className="mt-6 text-center text-muted-foreground">
+      <div className="mt-32 text-center text-muted-foreground">
         Failed to load job listings. Please try again.
+      </div>
+    );
+  }
+
+  if (data.jobs.length === 0) {
+    return (
+      <div className="mt-32 text-center text-muted-foreground">
+        No jobs were found. Try adjusting your filters.
       </div>
     );
   }
@@ -58,10 +66,7 @@ export default async function JobsList({
         </div>
         <ActiveListing />
       </div>
-      <PaginationControls
-        currentPage={safePage}
-        totalPages={totalPages}
-      />
+      <PaginationControls currentPage={safePage} totalPages={totalPages} />
     </div>
   );
 }
