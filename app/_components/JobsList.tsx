@@ -10,13 +10,19 @@ type JobsListProps = {
   level: string;
   role: string;
   page: number;
+  country: string;
 };
 
-export default async function JobsList({ level, role, page }: JobsListProps) {
+export default async function JobsList({
+  level,
+  role,
+  page,
+  country,
+}: JobsListProps) {
   let data: JobsResponse;
 
   try {
-    data = await fetchJobs(level, role, page);
+    data = await fetchJobs(level, role, page, country);
   } catch {
     return (
       <div className="mt-6 text-center text-muted-foreground">
@@ -29,7 +35,9 @@ export default async function JobsList({ level, role, page }: JobsListProps) {
   const safePage = Math.min(Math.max(page, 1), totalPages);
 
   if (page !== safePage) {
-    redirect(`?level=${level}&role=${role}&page=${safePage}`);
+    const params = new URLSearchParams({ level, role, page: String(safePage) });
+    if (country) params.set("country", country);
+    redirect(`?${params.toString()}`);
   }
 
   return (

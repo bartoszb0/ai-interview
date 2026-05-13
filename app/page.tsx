@@ -5,11 +5,16 @@ import Navbar from "./_components/Navbar";
 import NoFiltersSelected from "./_components/NoFilters";
 
 type PageProps = {
-  searchParams: Promise<{ level: string; role: string; page?: string }>;
+  searchParams: Promise<{
+    level: string;
+    role: string;
+    page?: string;
+    country: string;
+  }>;
 };
 
 export default async function Home({ searchParams }: PageProps) {
-  const { level, role, page } = await searchParams;
+  const { level, role, page, country } = await searchParams;
   const currentPage = Number(page) || 1;
 
   return (
@@ -19,9 +24,14 @@ export default async function Home({ searchParams }: PageProps) {
         {level && role ? (
           <Suspense
             fallback={<JobListSkeleton />}
-            key={`${level}-${role}-${currentPage}`}
+            key={`${level}-${role}-${currentPage}-${country}`}
           >
-            <JobsList level={level} role={role} page={currentPage} />
+            <JobsList
+              level={level}
+              role={role}
+              page={currentPage}
+              country={country}
+            />
           </Suspense>
         ) : (
           <NoFiltersSelected />
