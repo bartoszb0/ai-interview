@@ -194,6 +194,12 @@
     cursor: pointer;
   }
 
+  body[data-scroll-locked] {
+    overflow: auto !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+
   .scrollbar-minimal {
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb) transparent;
