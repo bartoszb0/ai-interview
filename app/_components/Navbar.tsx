@@ -8,9 +8,9 @@ export default function Navbar() {
     <div className="flex bg-secondary w-full p-3">
       <div className="max-w-5xl w-full mx-auto flex justify-between">
         <SearchFilters />
-        <Button className="rounded-sm w-[140px]" size="lg" asChild>
+        <Button className="rounded-sm w-[200px]" size="lg" asChild>
           <Link href="/interview">
-            <Sparkles /> AI Interview
+            <Sparkles /> Custom AI Interview
           </Link>
         </Button>
       </div>
