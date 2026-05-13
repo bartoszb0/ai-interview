@@ -22,7 +22,7 @@ export default function ProfileBtn() {
         <DropdownMenuItem asChild>
           <Link href={"/login"}>Login</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link href={"/register"}>Register</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
