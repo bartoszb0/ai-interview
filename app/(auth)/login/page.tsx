@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
 export default function Login() {
   return (
-    <Card className="w-full">
+    <>
       <CardHeader>
         <CardTitle className="text-2xl">Sign in</CardTitle>
       </CardHeader>
@@ -27,6 +27,6 @@ export default function Login() {
           </Link>
         </p>
       </CardContent>
-    </Card>
+    </>
   );
 }
