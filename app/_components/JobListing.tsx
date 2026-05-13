@@ -46,7 +46,7 @@ export default function JobListing({ job }: JobListingProps) {
             <div className="flex flex-wrap gap-2 mt-2 md:flex-nowrap md:gap-4">
               <Badge
                 variant={
-                  job.minSalary && job.maxSalary ? "default" : "destructive"
+                  job.minSalary || job.maxSalary ? "default" : "secondary"
                 }
               >
                 {job.minSalary && job.maxSalary
