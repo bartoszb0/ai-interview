@@ -2,13 +2,13 @@ import { SENIORITY_MAP } from "@/constants/seniorityMap";
 import { JobsResponse } from "@/types/jobResponse";
 
 export async function fetchJobs(
-  level: string,
+  seniority: string,
   role: string,
   page: number,
   country: string,
 ): Promise<JobsResponse> {
   const params = new URLSearchParams();
-  if (level) params.set("seniority", SENIORITY_MAP[level] ?? level);
+  if (seniority) params.set("seniority", SENIORITY_MAP[seniority] ?? seniority);
   if (role) params.set("q", role);
   if (country) params.set("country", country);
 

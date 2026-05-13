@@ -7,14 +7,14 @@ import JobListing from "./JobListing";
 import PaginationControls from "./PaginationControls";
 
 type JobsListProps = {
-  level: string;
+  seniority: string;
   role: string;
   page: number;
   country: string;
 };
 
 export default async function JobsList({
-  level,
+  seniority,
   role,
   page,
   country,
@@ -22,7 +22,7 @@ export default async function JobsList({
   let data: JobsResponse;
 
   try {
-    data = await fetchJobs(level, role, page, country);
+    data = await fetchJobs(seniority, role, page, country);
   } catch {
     return (
       <div className="mt-6 text-center text-muted-foreground">
@@ -35,7 +35,7 @@ export default async function JobsList({
   const safePage = Math.min(Math.max(page, 1), totalPages);
 
   if (page !== safePage) {
-    const params = new URLSearchParams({ level, role, page: String(safePage) });
+    const params = new URLSearchParams({ seniority, role, page: String(safePage) });
     if (country) params.set("country", country);
     redirect(`?${params.toString()}`);
   }
@@ -57,7 +57,7 @@ export default async function JobsList({
       <PaginationControls
         currentPage={safePage}
         totalPages={totalPages}
-        level={level}
+        seniority={seniority}
         role={role}
       />
     </div>

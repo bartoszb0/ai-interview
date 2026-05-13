@@ -1,4 +1,7 @@
 import { Suspense } from "react";
+import { COUNTRY } from "@/constants/country";
+import { ROLE } from "@/constants/role";
+import { SENIORITY } from "@/constants/seniority";
 import JobListSkeleton from "./_components/JobListSkeleton";
 import JobsList from "./_components/JobsList";
 import Navbar from "./_components/Navbar";
@@ -6,31 +9,35 @@ import NoFiltersSelected from "./_components/NoFilters";
 
 type PageProps = {
   searchParams: Promise<{
-    level: string;
-    role: string;
+    seniority?: string;
+    role?: string;
     page?: string;
-    country: string;
+    country?: string;
   }>;
 };
 
 export default async function Home({ searchParams }: PageProps) {
-  const { level, role, page, country } = await searchParams;
+  const { seniority, role, page, country } = await searchParams;
   const currentPage = Number(page) || 1;
+
+  const safeSeniority = seniority && SENIORITY.includes(seniority) ? seniority : "";
+  const safeRole = role && ROLE.includes(role) ? role : "";
+  const safeCountry = country && COUNTRY.some((c) => c.value === country) ? country : "";
 
   return (
     <div className="flex flex-col items-center">
       <Navbar />
       <div className="w-full max-w-6xl px-12">
-        {level && role ? (
+        {safeSeniority && safeRole ? (
           <Suspense
             fallback={<JobListSkeleton />}
-            key={`${level}-${role}-${currentPage}-${country}`}
+            key={`${safeSeniority}-${safeRole}-${currentPage}-${safeCountry}`}
           >
             <JobsList
-              level={level}
-              role={role}
+              seniority={safeSeniority}
+              role={safeRole}
               page={currentPage}
-              country={country}
+              country={safeCountry}
             />
           </Suspense>
         ) : (

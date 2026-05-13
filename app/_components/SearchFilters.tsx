@@ -36,8 +36,8 @@ export default function SearchFilters() {
   return (
     <div className="flex gap-2 items-center justify-center">
       <Select
-        value={searchParams.get("level") ?? ""}
-        onValueChange={(value) => navigate("level", value)}
+        value={searchParams.get("seniority") ?? ""}
+        onValueChange={(value) => navigate("seniority", value)}
       >
         <SelectTrigger className="w-[140px] rounded-none capitalize">
           <SelectValue placeholder="Seniority" />

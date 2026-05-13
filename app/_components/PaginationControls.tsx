@@ -11,18 +11,18 @@ import {
 type PaginationControlsProps = {
   currentPage: number;
   totalPages: number;
-  level: string;
+  seniority: string;
   role: string;
 };
 
-function pageUrl(page: number, level: string, role: string) {
-  return `?level=${level}&role=${role}&page=${page}`;
+function pageUrl(page: number, seniority: string, role: string) {
+  return `?seniority=${seniority}&role=${role}&page=${page}`;
 }
 
 export default function PaginationControls({
   currentPage,
   totalPages,
-  level,
+  seniority,
   role,
 }: PaginationControlsProps) {
   const pages: (number | "ellipsis")[] = [];
@@ -50,7 +50,7 @@ export default function PaginationControls({
           <PaginationPrevious
             href={
               currentPage > 1
-                ? pageUrl(currentPage - 1, level, role)
+                ? pageUrl(currentPage - 1, seniority, role)
                 : undefined
             }
             aria-disabled={currentPage === 1}
@@ -68,7 +68,7 @@ export default function PaginationControls({
           ) : (
             <PaginationItem key={p}>
               <PaginationLink
-                href={pageUrl(p, level, role)}
+                href={pageUrl(p, seniority, role)}
                 isActive={p === currentPage}
               >
                 {p}
@@ -81,7 +81,7 @@ export default function PaginationControls({
           <PaginationNext
             href={
               currentPage < totalPages
-                ? pageUrl(currentPage + 1, level, role)
+                ? pageUrl(currentPage + 1, seniority, role)
                 : undefined
             }
             aria-disabled={currentPage === totalPages}
