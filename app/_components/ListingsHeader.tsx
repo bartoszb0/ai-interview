@@ -6,7 +6,7 @@ export default function ListingsHeader({ totalCount }: { totalCount: number }) {
       <span className="text-4xl font-bold">Job Listings</span>
       <div className="flex flex-row justify-between items-center gap-1 mb-1">
         <span className="text-md">
-          Found <span className="text-primary">{totalCount}</span> jobs
+          Found <span className="text-primary">{totalCount}</span> listings
         </span>
         <SortSelect />
       </div>

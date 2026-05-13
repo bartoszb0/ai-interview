@@ -19,7 +19,7 @@ function FlickeringCount() {
 
   return (
     <span className="text-md text-muted-foreground">
-      Found <span className="text-primary">{count}</span> jobs
+      Found <span className="text-primary">{count}</span> listings
     </span>
   );
 }
