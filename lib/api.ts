@@ -6,12 +6,13 @@ export async function fetchJobs(
   role: string,
   page: number,
   country: string,
+  sort: string,
 ): Promise<JobsResponse> {
   const params = new URLSearchParams();
   if (seniority) params.set("seniority", SENIORITY_MAP[seniority] ?? seniority);
   if (role) params.set("q", role);
   if (country) params.set("country", country);
-
+  params.set("sort", sort);
   params.set("page", String(Math.max(page, 1)));
 
   const res = await fetch(

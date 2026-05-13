@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
+import SortSelect from "./SortSelect";
 
 function FlickeringCount() {
   const [count, setCount] = useState(
@@ -17,7 +18,9 @@ function FlickeringCount() {
   }, []);
 
   return (
-    <span className="text-md text-muted-foreground">Found {count} jobs</span>
+    <span className="text-md text-muted-foreground">
+      Found <span className="text-primary">{count}</span> jobs
+    </span>
   );
 }
 
@@ -41,9 +44,12 @@ function JobListingSkeletonItem() {
 export default function JobListSkeleton() {
   return (
     <div className="mt-6">
-      <div className="flex flex-col text-center mb-8">
+      <div className="flex flex-col mx-4 mb-1">
         <span className="text-4xl font-bold">Job Listings</span>
-        <FlickeringCount />
+        <div className="flex flex-row justify-between items-center gap-1 mb-1">
+          <FlickeringCount />
+          <SortSelect disabled={true} />
+        </div>
       </div>
       <div className="flex">
         <div className="flex flex-col flex-1 gap-4 min-w-0">

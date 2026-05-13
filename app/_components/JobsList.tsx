@@ -12,6 +12,7 @@ type JobsListProps = {
   role: string;
   page: number;
   country: string;
+  sort: string;
 };
 
 export default async function JobsList({
@@ -19,11 +20,12 @@ export default async function JobsList({
   role,
   page,
   country,
+  sort,
 }: JobsListProps) {
   let data: JobsResponse;
 
   try {
-    data = await fetchJobs(seniority, role, page, country);
+    data = await fetchJobs(seniority, role, page, country, sort);
   } catch {
     return (
       <div className="mt-6 text-center text-muted-foreground">
@@ -59,8 +61,6 @@ export default async function JobsList({
       <PaginationControls
         currentPage={safePage}
         totalPages={totalPages}
-        seniority={seniority}
-        role={role}
       />
     </div>
   );

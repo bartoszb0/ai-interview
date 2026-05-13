@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Pagination,
   PaginationContent,
@@ -7,24 +9,25 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useSearchParams } from "next/navigation";
 
 type PaginationControlsProps = {
   currentPage: number;
   totalPages: number;
-  seniority: string;
-  role: string;
 };
-
-function pageUrl(page: number, seniority: string, role: string) {
-  return `?seniority=${seniority}&role=${role}&page=${page}`;
-}
 
 export default function PaginationControls({
   currentPage,
   totalPages,
-  seniority,
-  role,
 }: PaginationControlsProps) {
+  const searchParams = useSearchParams();
+
+  function pageUrl(page: number) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(page));
+    return `?${params.toString()}`;
+  }
+
   const pages: (number | "ellipsis")[] = [];
 
   if (totalPages <= 7) {
@@ -48,15 +51,9 @@ export default function PaginationControls({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href={
-              currentPage > 1
-                ? pageUrl(currentPage - 1, seniority, role)
-                : undefined
-            }
+            href={currentPage > 1 ? pageUrl(currentPage - 1) : undefined}
             aria-disabled={currentPage === 1}
-            className={
-              currentPage === 1 ? "pointer-events-none opacity-50" : ""
-            }
+            className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
           />
         </PaginationItem>
 
@@ -67,10 +64,7 @@ export default function PaginationControls({
             </PaginationItem>
           ) : (
             <PaginationItem key={p}>
-              <PaginationLink
-                href={pageUrl(p, seniority, role)}
-                isActive={p === currentPage}
-              >
+              <PaginationLink href={pageUrl(p)} isActive={p === currentPage}>
                 {p}
               </PaginationLink>
             </PaginationItem>
@@ -79,15 +73,9 @@ export default function PaginationControls({
 
         <PaginationItem>
           <PaginationNext
-            href={
-              currentPage < totalPages
-                ? pageUrl(currentPage + 1, seniority, role)
-                : undefined
-            }
+            href={currentPage < totalPages ? pageUrl(currentPage + 1) : undefined}
             aria-disabled={currentPage === totalPages}
-            className={
-              currentPage === totalPages ? "pointer-events-none opacity-50" : ""
-            }
+            className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
           />
         </PaginationItem>
       </PaginationContent>
