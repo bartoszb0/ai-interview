@@ -2,10 +2,27 @@
 
 import { Button } from "@/components/ui/button";
 import { useActiveListingStore } from "@/store/active-listing-store";
+import { useInterviewStore } from "@/store/interview-store";
+import { X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ActiveListing() {
   const activeListing = useActiveListingStore((state) => state.activeListing);
-  const reset = useActiveListingStore((state) => state.reset);
+  const resetActiveListing = useActiveListingStore(
+    (state) => state.resetActiveListing,
+  );
+  const setJobDescription = useInterviewStore(
+    (state) => state.setJobDescription,
+  );
+  const resetInterview = useInterviewStore((state) => state.reset);
+  const router = useRouter();
+
+  const startInterview = () => {
+    resetInterview();
+    setJobDescription(activeListing?.description || "");
+    router.push("/interview");
+  };
 
   return (
     <>
@@ -18,20 +35,32 @@ export default function ActiveListing() {
         }`}
       >
         {activeListing && (
-          <div className="flex flex-col gap-4 w-96 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-minimal">
-            <div className="flex items-cente sticky justify-between">
-              <span className="font-semibold text-foreground">
-                {activeListing.companyName}
-              </span>
-              <Button size="sm" variant="ghost" onClick={reset}>
-                Close
+          <div className="flex flex-col w-96 max-h-[calc(100vh-14rem)]">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col">
+                <span className="font-semibold text-foreground">
+                  {activeListing.companyName}
+                </span>
+                <Link
+                  href={activeListing.applicationLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary"
+                >
+                  View the full listing
+                </Link>
+              </div>
+              <Button size="lg" variant="ghost" onClick={resetActiveListing}>
+                <X />
               </Button>
             </div>
             <div
-              className="prose prose-sm prose-invert max-w-none text-muted-foreground"
+              className="flex-1 overflow-y-auto scrollbar-minimal prose prose-sm prose-invert max-w-none text-muted-foreground"
               dangerouslySetInnerHTML={{ __html: activeListing.description }}
             />
-            <Button size="lg">Start AI Interview</Button>
+            <Button onClick={startInterview} size="lg" className="mt-4">
+              Start AI Interview
+            </Button>
           </div>
         )}
       </div>
@@ -40,7 +69,7 @@ export default function ActiveListing() {
       {activeListing && (
         <div
           className="lg:hidden fixed inset-0 bg-black/40 z-40"
-          onClick={reset}
+          onClick={resetActiveListing}
         />
       )}
 
@@ -51,23 +80,39 @@ export default function ActiveListing() {
         }`}
       >
         {activeListing && (
-          <div className="bg-card rounded-t-2xl border-t border-border max-h-[75vh] flex flex-col">
+          <div className="bg-card rounded-t-2xl border-t border-border max-h-[70vh] flex flex-col">
             <div className="flex justify-center pt-3 pb-1">
               <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
             </div>
             <div className="flex items-center justify-between px-6 py-3">
-              <span className="font-semibold text-foreground">
-                {activeListing.companyName}
-              </span>
-              <Button size="sm" variant="ghost" onClick={reset}>
-                Close
+              <div className="flex flex-col">
+                <span className="font-semibold text-foreground">
+                  {activeListing.companyName}
+                </span>
+                <Link
+                  href={activeListing.applicationLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary"
+                >
+                  View the full listing
+                </Link>
+              </div>
+              <Button variant="ghost" onClick={resetActiveListing}>
+                <X />
               </Button>
             </div>
             <div
-              className="overflow-y-auto px-6 pb-6 prose prose-sm prose-invert max-w-none text-muted-foreground scrollbar-minimal"
+              className="flex-1 overflow-y-auto px-6 scrollbar-minimal prose prose-sm prose-invert max-w-none text-muted-foreground"
               dangerouslySetInnerHTML={{ __html: activeListing.description }}
             />
-            <Button size="lg">Start AI Interview</Button>
+            <Button
+              onClick={startInterview}
+              size="lg"
+              className="mx-6 mb-6 mt-4 bg-primary"
+            >
+              Start AI Interview
+            </Button>
           </div>
         )}
       </div>
