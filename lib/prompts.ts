@@ -1,4 +1,4 @@
-import { Question } from "@/app/api/generate-questions/route";
+import { Question } from "@/schemas/questionsSchema";
 
 export const interviewSystemPrompt = `
 You are an experienced technical interviewer conducting a developer interview.
