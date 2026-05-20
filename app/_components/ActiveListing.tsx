@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { stripHtml } from "@/lib/utils";
 import { useActiveListingStore } from "@/store/active-listing-store";
 import { useInterviewStore } from "@/store/interview-store";
 import { X } from "lucide-react";
@@ -21,7 +22,7 @@ export default function ActiveListing() {
   const startInterview = () => {
     resetInterview();
     setJobDescription({
-      description: activeListing?.description || "",
+      description: stripHtml(activeListing?.description || ""),
       seniority: activeListing?.seniority || "",
     });
     router.push("/interview");
