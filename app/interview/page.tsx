@@ -18,7 +18,6 @@ export default function Interview() {
   const currentQuestionIndex = useInterviewStore(
     (state) => state.currentQuestionIndex,
   );
-  const feedback = useInterviewStore((state) => state.feedback);
 
   const inSession = questions.length > 0 && !interviewComplete;
 
@@ -41,7 +40,7 @@ export default function Interview() {
           ) : !interviewComplete ? (
             <>
               <AiQuestion key={currentQuestionIndex} />
-              {feedback?.decision === "follow_up" && <FollowupQuestion />}
+              <FollowupQuestion />
               <AnswerInput />
             </>
           ) : (

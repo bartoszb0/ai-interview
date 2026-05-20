@@ -43,7 +43,7 @@ export default function InterviewHeader() {
           </span>
         </div>
         <Button size="icon" variant="ghost" onClick={cancelInterview}>
-          <X className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground" />
+          <X className="shrink-0 text-muted-foreground hover:text-foreground" />
         </Button>
       </div>
     </div>
