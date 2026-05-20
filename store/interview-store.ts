@@ -1,5 +1,5 @@
-import { Evaluation } from "@/app/api/evaluate-answer/route";
-import { Question } from "@/app/api/generate-questions/route";
+import { Evaluation } from "@/schemas/evaluateSchema";
+import { Question } from "@/schemas/questionsSchema";
 import { ModelMessage } from "ai";
 import { create } from "zustand";
 
