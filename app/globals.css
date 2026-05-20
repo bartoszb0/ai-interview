@@ -181,6 +181,21 @@
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
 }
 
+@keyframes question-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-question-in {
+  animation: question-in 0.25s ease-out;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
