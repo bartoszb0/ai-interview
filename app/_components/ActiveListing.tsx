@@ -20,7 +20,10 @@ export default function ActiveListing() {
 
   const startInterview = () => {
     resetInterview();
-    setJobDescription(activeListing?.description || "");
+    setJobDescription({
+      description: activeListing?.description || "",
+      seniority: activeListing?.seniority || "",
+    });
     router.push("/interview");
   };
 
