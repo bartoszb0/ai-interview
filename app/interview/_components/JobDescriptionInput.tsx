@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useGenerateQuestions } from "@/hooks/useGenerateQuestions";
 import { useInterviewStore } from "@/store/interview-store";
-import { useTransition } from "react";
 import SamplesBtns from "./SamplesBtns";
 
 export default function JobDescriptionInput() {
@@ -9,25 +9,10 @@ export default function JobDescriptionInput() {
   const setJobDescription = useInterviewStore(
     (state) => state.setJobDescription,
   );
-  const setQuestions = useInterviewStore((state) => state.setQuestions);
-  const addMessages = useInterviewStore((state) => state.addMessages);
-  const [isLoading, startTransition] = useTransition();
 
-  const generateQuestions = () => {
-    startTransition(async () => {
-      const response = await fetch("/api/generate-questions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jobDescription: jobDescription.description }),
-      });
-
-      if (!response.ok) return;
-
-      const data = await response.json();
-      setQuestions(data);
-      addMessages([{ role: "assistant", content: data[0].text }]);
-    });
-  };
+  const { generateQuestions, isGenerating } = useGenerateQuestions(
+    jobDescription.description,
+  );
 
   return (
     <div className="relative rounded-2xl overflow-hidden">
@@ -49,7 +34,7 @@ export default function JobDescriptionInput() {
               seniority: jobDescription.seniority,
             })
           }
-          disabled={isLoading}
+          disabled={isGenerating}
           className="bg-transparent border-border focus-visible:border-primary/50 focus-visible:ring-primary/20 resize-none placeholder:text-muted-foreground/40 text-foreground/80 [field-sizing:normal]"
         />
 
@@ -58,7 +43,7 @@ export default function JobDescriptionInput() {
 
           <Button
             onClick={generateQuestions}
-            isLoading={isLoading}
+            isLoading={isGenerating}
             disabled={!jobDescription.description.trim()}
             className="bg-primary hover:bg-primary/90 text-primary-foreground border-0"
           >
