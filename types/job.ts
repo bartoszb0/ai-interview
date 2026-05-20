@@ -5,7 +5,7 @@ export type Job = {
   description: string;
   applicationLink: string;
   employmentType: string;
-  seniority: string[];
+  seniority: string;
   categories: string[];
   parentCategories: string[];
   companyName: string;
