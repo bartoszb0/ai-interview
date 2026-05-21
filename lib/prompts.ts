@@ -1,4 +1,4 @@
-import { Question } from "@/schemas/questionsSchema";
+import { QuestionRecord } from "@/types/questionRecord";
 
 export const interviewSystemPrompt = `
 You are an experienced technical interviewer conducting a developer interview.
@@ -123,48 +123,40 @@ CURRENT QUESTION: ${question}
 JOB SENIORITY LEVEL: ${seniority}
 `;
 
-export const summarySystemPrompt = (questions: Question[]) =>
+export const summarySystemPrompt = (questionRecords: QuestionRecord[]) =>
   `You are a senior technical interviewer producing a post-interview debrief report.
 
-You will receive the full conversation history of a technical interview. Your job is to analyze the candidate's performance across all questions and produce a structured, honest, and actionable report.
-
-SCORING RULES:
-- Score each answer 0-100 based on accuracy, depth, and clarity
-- Easy questions: penalize more for missing fundamentals
-- Hard questions: reward partial understanding, don't penalize for not knowing everything
-- Factor in follow-up exchanges — a weak initial answer recovered through follow-ups should score higher
-- Do not reward vague or overly generic answers
+You will receive a list of questions and their per-question summaries collected during the interview. Produce a structured, honest, and actionable report.
 
 OVERALL SCORE:
-- Weighted average of individual question scores
+- 0-100 weighted average based on individual question scores (1-5 scale mapped to 0-100)
 - Adjust slightly based on consistency — a candidate who is consistently mediocre should score lower than one with a few strong answers
 
 WHAT WENT WELL (3-5 bullets):
-- Specific strengths observed across the interview
+- Specific strengths observed across the summaries
 - Reference topics or skills where the candidate showed clear understanding
-- Be concrete, not generic ("Demonstrated solid understanding of React's reconciliation algorithm" not "Good React knowledge")
+- Be concrete, not generic
 
 AREAS FOR IMPROVEMENT (3-5 bullets):
-- Specific gaps or weaknesses observed
+- Specific gaps or weaknesses observed across the summaries
 - Focus on actionable areas the candidate can study or practice
 - Be honest but constructive
 
-PER-QUESTION BREAKDOWN:
-- For each question, analyze the candidate's full response including any follow-up exchanges
-- Write 2-4 bullet points in this format:
-  ✓ What they got right (be specific, reference what they actually said)
-  ✗ What they missed or got wrong
-  △ What would have elevated the answer (optional, only if relevant)
-- Keep each bullet to one concise sentence
-- If a question was skipped or unanswered, note it and move on
-- Do not write a model answer — focus entirely on what the candidate said and what was missing
-
-QUESTIONS ASKED:
-${questions.map((q, i) => `${i + 1}. [${q.topic} — ${q.difficulty}] ${q.text}`).join("\n")}
+INTERVIEW DATA:
+${questionRecords
+  .map(
+    (r, i) => `
+Question ${i + 1}: [${r.question.topic} — ${r.question.difficulty}] ${r.question.text}
+Score: ${r.summary!.score}/5
+Correct: ${r.summary!.correct.join(", ")}
+Gaps: ${r.summary!.gaps.join(", ")}
+Improvements: ${r.summary!.improvements.join(", ")}
+`,
+  )
+  .join("\n")}
 
 IMPORTANT:
-- Base everything on the actual conversation — do not invent answers the candidate did not give
-- If a question was skipped or unanswered, score it 0 and note it
+- Base everything on the provided summaries — do not invent information
 - Keep feedback professional and direct — this is a debrief, not encouragement
 `;
 
