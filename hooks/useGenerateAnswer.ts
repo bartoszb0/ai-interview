@@ -2,7 +2,12 @@ import { useInterviewStore } from "@/store/interview-store";
 import { useState } from "react";
 
 export function useGenerateAnswer(setAnswer: (text: string) => void) {
-  const messages = useInterviewStore((state) => state.messages);
+  const questionRecords = useInterviewStore((state) => state.questionRecords);
+  const currentQuestionIndex = useInterviewStore(
+    (state) => state.currentQuestionIndex,
+  );
+
+  const question = questionRecords[currentQuestionIndex].question.text;
 
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -11,7 +16,9 @@ export function useGenerateAnswer(setAnswer: (text: string) => void) {
     const response = await fetch("/api/answer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: messages.at(-1)?.content }),
+      body: JSON.stringify({
+        question: question,
+      }),
     });
 
     if (!response.ok) {

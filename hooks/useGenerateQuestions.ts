@@ -2,8 +2,9 @@ import { useInterviewStore } from "@/store/interview-store";
 import { useState } from "react";
 
 export function useGenerateQuestions(jobDescription: string) {
-  const setQuestions = useInterviewStore((state) => state.setQuestions);
-  const addMessages = useInterviewStore((state) => state.addMessages);
+  const initQuestionRecords = useInterviewStore(
+    (state) => state.initQuestionRecords,
+  );
 
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -21,8 +22,7 @@ export function useGenerateQuestions(jobDescription: string) {
     }
 
     const data = await response.json();
-    setQuestions(data);
-    addMessages([{ role: "assistant", content: data[0].text }]);
+    initQuestionRecords(data);
     setIsGenerating(false);
   };
 
