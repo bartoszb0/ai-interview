@@ -11,7 +11,7 @@ import PageHero from "./_components/PageHero";
 import SummaryScreen from "./_components/SummaryScreen";
 
 export default function Interview() {
-  const questions = useInterviewStore((state) => state.questions);
+  const questionRecords = useInterviewStore((state) => state.questionRecords);
   const interviewComplete = useInterviewStore(
     (state) => state.interviewComplete,
   );
@@ -19,7 +19,7 @@ export default function Interview() {
     (state) => state.currentQuestionIndex,
   );
 
-  const inSession = questions.length > 0 && !interviewComplete;
+  const inSession = questionRecords.length > 0 && !interviewComplete;
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -31,7 +31,7 @@ export default function Interview() {
         }`}
       >
         <div className="w-full max-w-2xl flex flex-col gap-4">
-          {questions.length === 0 ? (
+          {questionRecords.length === 0 ? (
             <>
               <PageHero />
               <JobDescriptionInput />
