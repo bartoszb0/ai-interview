@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 export default function InterviewHeader() {
   const router = useRouter();
 
-  const questions = useInterviewStore((state) => state.questions);
+  const questions = useInterviewStore((state) => state.questionRecords);
   const currentQuestionIndex = useInterviewStore(
     (state) => state.currentQuestionIndex,
   );

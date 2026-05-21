@@ -4,12 +4,12 @@ import { useInterviewStore } from "@/store/interview-store";
 
 export default function AiQuestion() {
   const feedback = useInterviewStore((state) => state.feedback);
-  const questions = useInterviewStore((state) => state.questions);
+  const questionRecords = useInterviewStore((state) => state.questionRecords);
   const currentQuestionIndex = useInterviewStore(
     (state) => state.currentQuestionIndex,
   );
 
-  const question = questions[currentQuestionIndex];
+  const question = questionRecords[currentQuestionIndex].question.text;
   const muteQuestion = feedback?.decision === "follow_up";
 
   return (
@@ -21,7 +21,7 @@ export default function AiQuestion() {
         <p
           className={`text-base leading-relaxed transition-colors duration-300 ${muteQuestion ? "text-muted-foreground/30" : "text-foreground"}`}
         >
-          {question.text}
+          {question}
         </p>
       </div>
     </div>
