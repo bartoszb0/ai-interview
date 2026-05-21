@@ -28,7 +28,6 @@ export function useEvaluateAnswer(
 
     const currentRecord = questionRecords[currentQuestionIndex];
     const followupCount = currentRecord.exchanges.length;
-    console.log(followupCount);
     const isLastFollowup = followupCount >= 2;
 
     const contextMessages: ModelMessage[] = [
