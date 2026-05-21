@@ -4,18 +4,16 @@ import { summarySchema } from "@/schemas/summarySchema";
 import { generateText, Output } from "ai";
 
 export async function POST(req: Request) {
-  const { questions, messages } = await req.json();
+  const { questionRecords } = await req.json();
 
   const { output } = await generateText({
     model: smartModel,
     output: Output.object({
       schema: summarySchema,
     }),
-    system: summarySystemPrompt(questions),
-    messages,
+    system: summarySystemPrompt(questionRecords),
+    prompt: "Generate the interview summary report",
   });
-
-  console.log(output);
 
   return Response.json(output);
 }
