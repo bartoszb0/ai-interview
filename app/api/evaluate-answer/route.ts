@@ -17,7 +17,5 @@ export async function POST(req: Request) {
     messages: trimmedMessages,
   });
 
-  console.log(output);
-
   return Response.json(output);
 }
