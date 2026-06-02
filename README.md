@@ -69,7 +69,7 @@ Because the model's output is a typed object, the client can branch on it determ
 
 ```bash
 # 1. Clone
-git clone <your-repo-url>
+git clone https://github.com/bartoszb0/ai-interview
 cd ai-interview
 
 # 2. Install dependencies
