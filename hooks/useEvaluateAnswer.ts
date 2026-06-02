@@ -43,7 +43,7 @@ export function useEvaluateAnswer(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         messages: contextMessages,
-        question: currentRecord.question,
+        question: currentRecord.question.text,
         seniority: jobDescription.seniority,
         followupCount,
       }),
