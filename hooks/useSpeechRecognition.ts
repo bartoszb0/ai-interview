@@ -1,5 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+type SpeechRecognitionResult = {
+  readonly length: number;
+  [index: number]: { transcript: string };
+};
+
+type SpeechRecognitionResultList = {
+  readonly length: number;
+  [Symbol.iterator](): Iterator<SpeechRecognitionResult>;
+};
+
+type SpeechRecognitionEvent = {
+  results: SpeechRecognitionResultList;
+};
+
 type SpeechRecognitionInstance = {
   continuous: boolean;
   interimResults: boolean;
