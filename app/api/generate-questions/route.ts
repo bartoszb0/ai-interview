@@ -17,7 +17,5 @@ export async function POST(req: Request) {
     prompt: jobDescription,
   });
 
-  console.log(output);
-
   return Response.json(output.questions);
 }
