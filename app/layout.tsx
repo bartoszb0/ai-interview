@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "next-themes";
 import { DM_Sans, IBM_Plex_Mono, Lora } from "next/font/google";
 import "./globals.css";
@@ -36,7 +35,7 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>
