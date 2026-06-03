@@ -4,8 +4,9 @@ Practice technical interviews against real job postings, with an AI interviewer 
 
 **Live demo:** https://ai-interview-trainer-five.vercel.app
 
-<img width="499" height="305" alt="ai1" src="https://github.com/user-attachments/assets/bab27cac-03a8-44d0-b94e-400b05426a21" />
-<img width="499" height="305" alt="ai2" src="https://github.com/user-attachments/assets/848d16e3-0eb5-45f7-873e-5894a9fde851" />
+<img width="2276" height="1422" alt="ai1" src="https://github.com/user-attachments/assets/bab27cac-03a8-44d0-b94e-400b05426a21" />
+<img width="2276" height="1422" alt="ai2" src="https://github.com/user-attachments/assets/848d16e3-0eb5-45f7-873e-5894a9fde851" />
+
 
 
 ## Overview
