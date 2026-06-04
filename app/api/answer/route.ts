@@ -1,5 +1,5 @@
 import { fastModel } from "@/lib/ai";
-import { generateAnswerSystemPrompt } from "@/lib/prompts";
+import { generateAnswerSystemPrompt } from "@/lib/prompts/generate-answer";
 import { generateText } from "ai";
 
 export async function POST(req: Request) {

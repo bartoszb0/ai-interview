@@ -1,5 +1,5 @@
 import { smartModel } from "@/lib/ai";
-import { evaluateAnswerSystemPrompt } from "@/lib/prompts";
+import { evaluateAnswerSystemPrompt } from "@/lib/prompts/evaluate";
 import { evaluateSchema } from "@/schemas/evaluateSchema";
 import { generateText, Output } from "ai";
 

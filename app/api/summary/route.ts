@@ -1,5 +1,5 @@
 import { smartModel } from "@/lib/ai";
-import { summarySystemPrompt } from "@/lib/prompts";
+import { summarySystemPrompt } from "@/lib/prompts/summary";
 import { summarySchema } from "@/schemas/summarySchema";
 import { generateText, Output } from "ai";
 
