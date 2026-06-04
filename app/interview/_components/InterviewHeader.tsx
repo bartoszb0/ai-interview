@@ -8,14 +8,14 @@ import { useRouter } from "next/navigation";
 export default function InterviewHeader() {
   const router = useRouter();
 
-  const questions = useInterviewStore((state) => state.questionRecords);
+  const questionRecords = useInterviewStore((state) => state.questionRecords);
   const currentQuestionIndex = useInterviewStore(
     (state) => state.currentQuestionIndex,
   );
   const jobDescription = useInterviewStore((state) => state.jobDescription);
   const reset = useInterviewStore((state) => state.reset);
 
-  const progress = (currentQuestionIndex / questions.length) * 100;
+  const progress = (currentQuestionIndex / questionRecords.length) * 100;
   const label = jobDescription.seniority
     ? `${jobDescription.seniority} Interview`
     : "AI Interview";
@@ -39,11 +39,11 @@ export default function InterviewHeader() {
             />
           </div>
           <span className="text-xs font-mono text-muted-foreground shrink-0">
-            {currentQuestionIndex + 1}/{questions.length}
+            {currentQuestionIndex + 1}/{questionRecords.length}
           </span>
         </div>
         <Button size="icon" variant="ghost" onClick={cancelInterview}>
-          <X className="shrink-0 text-muted-foreground hover:text-foreground" />
+          <X className="shrink-0 text-muted-foreground hover:text-foreground w-4" />
         </Button>
       </div>
     </div>
