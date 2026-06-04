@@ -8,11 +8,6 @@ Users paste a job description, AI generates technical interview questions tailor
 The user answers each question one at a time, receives streaming AI feedback per answer,
 and gets a final summary with score and improvement areas at the end.
 
-## Current phase
-
-Phase 1 — core AI loop complete. Auth and DB are Phase 2.
-Working on: polish, edge cases, and summary screen.
-
 ## Styling conventions
 
 - Use shadcn CSS variable colors — never hardcode hex or rgb values
@@ -26,11 +21,10 @@ Working on: polish, edge cases, and summary screen.
 
 - Next.js 16 + TypeScript
 - Tailwind CSS + shadcn/ui (Radix based)
-- Vercel AI SDK v6 + Groq (llama-3.3-70b-versatile)
+- Vercel AI SDK v6 + Groq
 - Zustand for interview session state
 - Supabase for auth and database (Phase 2)
 - Framer Motion for animations (Phase 3)
-- next-intl for i18n
 - next-themes for light/dark mode
 
 ## Project structure
@@ -95,22 +89,23 @@ store/
 
 lib/
   ai.ts                       ← centralized AI model config
-  prompts.ts                  ← all system prompts and prompt templates
+  prompts/
+    interview.ts              ← question generation system prompt
+    evaluate.ts               ← answer evaluation system prompt
+    summary.ts                ← post-interview debrief system prompt
+    generate-answer.ts        ← sample answer generation system prompt
   sample-jds.ts               ← sample job descriptions for testing
   api.ts                      ← Himalayas jobs API fetch helper
   utils.ts                    ← shadcn cn() utility
+
+schemas/                      ← Zod schemas and inferred types
+types/
+  questionRecord.ts           ← QuestionRecord type (question + exchanges + summary)
 
 constants/                    ← filter option lists (seniority, country, sort, etc.)
 
 providers/                    ← React context providers
   theme-provider.tsx
-
-messages/                     ← i18n translation files
-  en.json
-  pl.json
-
-i18n/                         ← next-intl config
-  request.ts
 
 proxy.ts                      ← Next.js 16 middleware (renamed from middleware.ts)
 ```
@@ -131,4 +126,5 @@ proxy.ts                      ← Next.js 16 middleware (renamed from middleware
 - Shared components: `components/common/`
 - shadcn components: `components/ui/` — never add custom files here
 - Always use `@/` path alias, never relative imports like `../../`
-- Zod schemas and inferred types live in the route file that uses them
+- Zod schemas live in `schemas/`, inferred types in `types/`
+- Import prompts directly from their file, e.g. `@/lib/prompts/evaluate` — no barrel index
