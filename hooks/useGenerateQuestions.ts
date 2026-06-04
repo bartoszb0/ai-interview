@@ -1,5 +1,7 @@
+import { handleResponseError } from "@/lib/response-errors";
 import { useInterviewStore } from "@/store/interview-store";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function useGenerateQuestions(jobDescription: string) {
   const initQuestionRecords = useInterviewStore(
@@ -10,20 +12,25 @@ export function useGenerateQuestions(jobDescription: string) {
 
   const generateQuestions = async () => {
     setIsGenerating(true);
-    const response = await fetch("/api/generate-questions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jobDescription }),
-    });
+    try {
+      const response = await fetch("/api/generate-questions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jobDescription }),
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
+        handleResponseError(response, "Failed to generate questions");
+        return;
+      }
+
+      const data = await response.json();
+      initQuestionRecords(data);
+    } catch {
+      toast.error("Network error");
+    } finally {
       setIsGenerating(false);
-      return;
     }
-
-    const data = await response.json();
-    initQuestionRecords(data);
-    setIsGenerating(false);
   };
 
   return { generateQuestions, isGenerating };

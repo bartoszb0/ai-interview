@@ -1,5 +1,6 @@
 import { useInterviewStore } from "@/store/interview-store";
 import { useState } from "react";
+import { handleResponseError } from "@/lib/response-errors";
 import { toast } from "sonner";
 
 export function useGenerateAnswer(setAnswer: (text: string) => void) {
@@ -22,11 +23,7 @@ export function useGenerateAnswer(setAnswer: (text: string) => void) {
       });
 
       if (!response.ok) {
-        if (response.status === 429) {
-          toast.error("Rate limit hit, try again in a moment");
-        } else {
-          toast.error("Failed to generate answer");
-        }
+        handleResponseError(response, "Failed to generate answer");
         return;
       }
 

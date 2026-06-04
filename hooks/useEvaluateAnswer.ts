@@ -1,6 +1,8 @@
+import { handleResponseError } from "@/lib/response-errors";
 import { useInterviewStore } from "@/store/interview-store";
 import { ModelMessage } from "ai";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function useEvaluateAnswer(
   answer: string,
@@ -38,42 +40,47 @@ export function useEvaluateAnswer(
       { role: "user" as const, content: answer },
     ];
 
-    const response = await fetch("/api/evaluate-answer", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        messages: contextMessages,
-        question: currentRecord.question.text,
-        seniority: jobDescription.seniority,
-        followupCount,
-      }),
-    });
+    try {
+      const response = await fetch("/api/evaluate-answer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: contextMessages,
+          question: currentRecord.question.text,
+          seniority: jobDescription.seniority,
+          followupCount,
+        }),
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
+        handleResponseError(response, "Failed to evaluate answer");
+        return;
+      }
+
+      const data = await response.json();
+
+      addExchange(answer, data.feedback);
+
+      if (data.decision === "follow_up" && !isLastFollowup) {
+        // stay on current question
+      } else {
+        if (data.questionSummary) {
+          finalizeQuestion(data.questionSummary);
+        }
+        const nextIndex = currentQuestionIndex + 1;
+        nextQuestion();
+        if (!questionRecords[nextIndex]) {
+          setInterviewComplete();
+        }
+      }
+
+      setFeedback(data);
+      setAnswer("");
+    } catch {
+      toast.error("Network error");
+    } finally {
       setIsEvaluating(false);
-      return;
     }
-
-    const data = await response.json();
-
-    addExchange(answer, data.feedback);
-
-    if (data.decision === "follow_up" && !isLastFollowup) {
-      // stay on current question
-    } else {
-      if (data.questionSummary) {
-        finalizeQuestion(data.questionSummary);
-      }
-      const nextIndex = currentQuestionIndex + 1;
-      nextQuestion();
-      if (!questionRecords[nextIndex]) {
-        setInterviewComplete();
-      }
-    }
-
-    setFeedback(data);
-    setAnswer("");
-    setIsEvaluating(false);
   };
 
   return { evaluateAnswer, isEvaluating };
