@@ -7,12 +7,13 @@ export function useGenerateAnswer(setAnswer: (text: string) => void) {
     (state) => state.currentQuestionIndex,
   );
 
-  const question = questionRecords[currentQuestionIndex].question.text;
-
   const [isGenerating, setIsGenerating] = useState(false);
 
   const generateAnswerAI = async () => {
     setIsGenerating(true);
+
+    const question = questionRecords[currentQuestionIndex].question.text;
+
     const response = await fetch("/api/answer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
