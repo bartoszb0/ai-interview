@@ -2,6 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useEvaluateAnswer } from "@/hooks/useEvaluateAnswer";
 import { useGenerateAnswer } from "@/hooks/useGenerateAnswer";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
@@ -43,19 +48,26 @@ export default function AnswerInput() {
               )}
             </Button>
           )}
-          <Button
-            size="icon"
-            variant="ghost"
-            disabled={isGenerating}
-            onClick={generateAnswerAI}
-            className="h-7 w-7 text-muted-foreground hover:text-primary/80"
-          >
-            {isGenerating ? (
-              <Loader2 className="animate-spin w-3.5 h-3.5" />
-            ) : (
-              <Sparkles className="w-3.5 h-3.5" />
-            )}
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                variant="ghost"
+                disabled={isGenerating}
+                onClick={generateAnswerAI}
+                className="h-7 w-7 text-muted-foreground hover:text-primary/80"
+              >
+                {isGenerating ? (
+                  <Loader2 className="animate-spin w-3.5 h-3.5" />
+                ) : (
+                  <Sparkles className="w-3.5 h-3.5" />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Generate AI answer</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
 
