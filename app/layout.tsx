@@ -1,7 +1,8 @@
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { DM_Sans, IBM_Plex_Mono, Lora } from "next/font/google";
-import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const fontSans = DM_Sans({
@@ -37,8 +38,10 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-          <Toaster position="bottom-center" />
+          <TooltipProvider>
+            {children}
+            <Toaster position="bottom-center" />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
