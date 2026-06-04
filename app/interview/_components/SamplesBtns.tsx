@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { sampleJobDescriptions } from "@/lib/sample-jds";
 import { useInterviewStore } from "@/store/interview-store";
