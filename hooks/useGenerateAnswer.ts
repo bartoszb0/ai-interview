@@ -1,6 +1,7 @@
+import { notifyModelFallback } from "@/lib/notify-model-fallback";
+import { handleResponseError } from "@/lib/response-errors";
 import { useInterviewStore } from "@/store/interview-store";
 import { useState } from "react";
-import { handleResponseError } from "@/lib/response-errors";
 import { toast } from "sonner";
 
 export function useGenerateAnswer(setAnswer: (text: string) => void) {
@@ -26,6 +27,8 @@ export function useGenerateAnswer(setAnswer: (text: string) => void) {
         handleResponseError(response, "Failed to generate answer");
         return;
       }
+
+      notifyModelFallback(response);
 
       const text = await response.json();
       setAnswer(text);

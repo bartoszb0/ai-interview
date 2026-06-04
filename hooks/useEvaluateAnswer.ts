@@ -1,3 +1,4 @@
+import { notifyModelFallback } from "@/lib/notify-model-fallback";
 import { handleResponseError } from "@/lib/response-errors";
 import { useInterviewStore } from "@/store/interview-store";
 import { ModelMessage } from "ai";
@@ -56,6 +57,8 @@ export function useEvaluateAnswer(
         handleResponseError(response, "Failed to evaluate answer");
         return;
       }
+
+      notifyModelFallback(response);
 
       const data = await response.json();
 

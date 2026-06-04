@@ -1,3 +1,4 @@
+import { notifyModelFallback } from "@/lib/notify-model-fallback";
 import { handleResponseError } from "@/lib/response-errors";
 import { useInterviewStore } from "@/store/interview-store";
 import { useState } from "react";
@@ -23,6 +24,8 @@ export function useGenerateQuestions(jobDescription: string) {
         handleResponseError(response, "Failed to generate questions");
         return;
       }
+
+      notifyModelFallback(response);
 
       const data = await response.json();
       initQuestionRecords(data);
