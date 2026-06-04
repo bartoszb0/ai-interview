@@ -31,6 +31,9 @@ The questions are grounded in an actual open position rather than generic prompt
 4. **Answer one at a time** — Each answer is evaluated in the context of the conversation so far. The AI returns brief feedback and a decision: ask a follow-up (up to two per question) or move to the next question. Follow-ups are required to trace back to something you actually said.
 5. **Get your debrief** — Once every question is covered, the per-question scores and notes are summarized into an overall report with concrete strengths and areas to improve.
 
+## Interview flow
+<img width="1056" height="854" alt="image" src="https://github.com/user-attachments/assets/69cea7e1-d892-47fe-b386-92a17ad98692" />
+
 ## Technical highlights
 
 **Structured LLM output with Zod.** Every AI call returns a validated, typed object rather than free text, using the Vercel AI SDK's `Output.object` with a Zod schema. The schemas (in `schemas/`) define the contract for each step:
