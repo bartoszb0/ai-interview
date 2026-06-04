@@ -1,4 +1,4 @@
-import { QuestionRecord } from "@/types/questionRecord";
+import type { QuestionRecord } from "@/types/questionRecord";
 
 export const interviewSystemPrompt = `
 You are an experienced technical interviewer conducting a developer interview.
