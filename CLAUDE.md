@@ -5,7 +5,7 @@
 ## What this app does
 
 Users paste a job description, AI generates technical interview questions tailored to the role.
-The user answers each question one at a time, receives streaming AI feedback per answer,
+The user answers each question one at a time, receives AI feedback per answer,
 and gets a final summary with score and improvement areas at the end.
 
 ## Styling conventions
@@ -22,6 +22,7 @@ and gets a final summary with score and improvement areas at the end.
 - Next.js 16 + TypeScript
 - Tailwind CSS + shadcn/ui (Radix based)
 - Vercel AI SDK v6 + Groq
+- sonner for toast notifications
 - Zustand for interview session state
 - Supabase for auth and database (Phase 2)
 - Framer Motion for animations (Phase 3)
@@ -57,7 +58,10 @@ app/
       PageHero.tsx            ← pre-interview hero text
       SamplesBtns.tsx         ← sample JD quick-load buttons
       BrowseJobsBtn.tsx       ← link back to job listings
-      SummaryScreen.tsx       ← post-interview debrief
+      SummaryScreen.tsx       ← post-interview debrief (orchestrates the components below)
+      ScoreGauge.tsx          ← animated SVG ring showing the overall score
+      HighlightCard.tsx       ← "what went well" / "improve on" card (positive/warning variant)
+      QuestionBreakdownItem.tsx ← per-question card: score, expandable conversation, detail lists
   _components/                ← home page (job listings) components
     Navbar.tsx
     SearchFilters.tsx
@@ -85,15 +89,20 @@ components/
   ui/                         ← shadcn components only, do not add custom files here
 
 store/
-  interview-store.ts          ← Zustand store (interview session state only)
+  interview-store.ts          ← Zustand store (interview session state)
+  active-listing-store.ts     ← Zustand store (selected job listing)
 
 lib/
-  ai.ts                       ← centralized AI model config
+  ai.ts                       ← centralized AI model config (fast + smart models)
   prompts/
     interview.ts              ← question generation system prompt
     evaluate.ts               ← answer evaluation system prompt
     summary.ts                ← post-interview debrief system prompt
     generate-answer.ts        ← sample answer generation system prompt
+  api-errors.ts               ← server: isRateLimit() + aiErrorResponse() for AI routes
+  fallback.ts                 ← server: withModelFallback() (smart→fast on rate limit)
+  response-errors.ts          ← client: handleResponseError() (toasts, 429-aware)
+  notify-model-fallback.ts    ← client: notifyModelFallback() (reads X-Model-Fallback header)
   sample-jds.ts               ← sample job descriptions for testing
   api.ts                      ← Himalayas jobs API fetch helper
   utils.ts                    ← shadcn cn() utility

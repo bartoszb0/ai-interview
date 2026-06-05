@@ -63,6 +63,7 @@ Because the model's output is a typed object, the client can branch on it determ
 - **Validation:** Zod (structured model output + inferred types)
 - **State:** Zustand
 - **Styling:** Tailwind CSS v4, shadcn/ui (Radix primitives), `lucide-react` icons
+- **Notifications:** sonner (toasts for errors and model fallback)
 - **Theming:** next-themes (system / light / dark)
 - **Voice input:** Web Speech API
 - **Data source:** Himalayas job board API
