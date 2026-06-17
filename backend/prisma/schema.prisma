@@ -13,6 +13,18 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Seniority {
+  junior
+  mid
+  senior
+}
+
+enum Difficulty {
+  easy
+  medium
+  hard
+}
+
 model User {
   id        String          @id @default(uuid())
   email     String          @unique
