@@ -14,7 +14,10 @@ export const useAuthStore = create<AuthStore>()(
       token: null,
       userEmail: null,
       login: (token, userEmail) => set({ token, userEmail }),
-      logout: () => set({ token: null, userEmail: null }),
+      logout: () => {
+        set({ token: null, userEmail: null });
+        window.location.href = "/";
+      },
     }),
     { name: "auth-store" },
   ),
