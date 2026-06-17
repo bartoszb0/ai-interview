@@ -26,7 +26,27 @@ enum Difficulty {
 }
 
 model User {
-  id        String          @id @default(uuid())
+  id        String          @id @default(uuid()) @db.Uuid
   email     String          @unique
   password  String
+  interviewSessions InterviewSession[]
+}
+
+model InterviewSession {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  jobTitle       String
+  jobDescription String
+  jobSeniority   Seniority
+
+  questionRecords     Json
+  overallScore        Int
+  whatWentWell        String[]
+  areasForImprovement String[]
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
 }
