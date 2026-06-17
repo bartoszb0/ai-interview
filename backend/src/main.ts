@@ -8,6 +8,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.useGlobalFilters(new PrismaExceptionFilter());
+  app.enableCors({
+    origin: process.env.FRONTEND_URL,
+  });
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
