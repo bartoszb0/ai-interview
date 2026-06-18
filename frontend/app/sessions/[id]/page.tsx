@@ -10,6 +10,7 @@ import { Target, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
+import DeleteSession from "./_components/DeleteSession";
 
 export default function SessionDetail({
   params,
@@ -48,22 +49,25 @@ export default function SessionDetail({
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10 flex flex-col gap-6 animate-in fade-in duration-500">
-      <div className="flex flex-col gap-1">
-        <Link
-          href="/sessions"
-          className="text-xs text-muted-foreground hover:text-foreground"
-        >
-          ← Back to sessions
-        </Link>
-        <h1 className="text-2xl font-semibold">{session.jobTitle}</h1>
-        <p className="text-sm text-muted-foreground capitalize">
-          {session.jobSeniority} ·{" "}
-          {new Date(session.createdAt).toLocaleDateString(undefined, {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          })}
-        </p>
+      <div className="flex justify-between">
+        <div className="flex flex-col gap-1">
+          <Link
+            href="/sessions"
+            className="text-xs text-muted-foreground hover:text-foreground"
+          >
+            ← Back to sessions
+          </Link>
+          <h1 className="text-2xl font-semibold">{session.jobTitle}</h1>
+          <p className="text-sm text-muted-foreground capitalize">
+            {session.jobSeniority} ·{" "}
+            {new Date(session.createdAt).toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </p>
+        </div>
+        <DeleteSession id={id} />
       </div>
 
       <ScoreGauge score={session.overallScore} />
