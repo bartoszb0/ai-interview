@@ -19,5 +19,7 @@ export async function apiClient(endpoint: string, options: RequestInit = {}) {
     throw new Error(error.message);
   }
 
+  if (response.status === 204) return;
+
   return response.json();
 }
