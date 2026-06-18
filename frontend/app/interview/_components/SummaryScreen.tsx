@@ -1,11 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Summary } from "@/schemas/summarySchema";
+import { useAuthStore } from "@/store/auth-store";
 import { useInterviewStore } from "@/store/interview-store";
 import { Loader2, Target, TrendingUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import HighlightCard from "./HighlightCard";
 import QuestionBreakdownItem from "./QuestionBreakdownItem";
+import SaveSessionBtn from "./SaveSessionBtn";
 import ScoreGauge from "./ScoreGauge";
 
 export default function SummaryScreen() {
@@ -13,6 +15,7 @@ export default function SummaryScreen() {
   const reset = useInterviewStore((state) => state.reset);
   const [isSummarizing, setIsSummarizing] = useState(true);
   const [summary, setSummary] = useState<Summary>();
+  const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -75,13 +78,17 @@ export default function SummaryScreen() {
         </div>
       </div>
 
-      <Button
-        onClick={reset}
-        variant="outline"
-        className="w-full border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/50 bg-transparent"
-      >
-        Start new interview
-      </Button>
+      <div className="flex flex-col gap-4">
+        {token && <SaveSessionBtn summary={summary} />}
+
+        <Button
+          onClick={reset}
+          variant="outline"
+          className="w-full border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/50 bg-transparent"
+        >
+          Start new interview
+        </Button>
+      </div>
     </div>
   );
 }
