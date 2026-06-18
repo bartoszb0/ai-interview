@@ -33,11 +33,18 @@ export default function ScoreGauge({ score }: { score: number }) {
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <p className="text-sm font-mono text-primary/70 uppercase tracking-widest">
+      <p
+        className="text-sm font-mono uppercase tracking-widest"
+        style={{ color: color }}
+      >
         Overall score
       </p>
       <div className="relative h-44 w-44">
-        <svg className="h-full w-full -rotate-90" viewBox="0 0 160 160" aria-hidden>
+        <svg
+          className="h-full w-full -rotate-90"
+          viewBox="0 0 160 160"
+          aria-hidden
+        >
           <circle
             cx="80"
             cy="80"
@@ -62,10 +69,7 @@ export default function ScoreGauge({ score }: { score: number }) {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span
-            className="text-5xl font-bold tabular-nums"
-            style={{ color }}
-          >
+          <span className="text-5xl font-bold tabular-nums" style={{ color }}>
             {score}
           </span>
           <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
