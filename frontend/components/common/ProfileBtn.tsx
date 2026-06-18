@@ -13,10 +13,13 @@ import {
 import { useAuthStore } from "@/store/auth-store";
 import { User } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function ProfileBtn() {
   const token = useAuthStore((state) => state.token);
   const logout = useAuthStore((state) => state.logout);
+  const pathname = usePathname();
+  const onSessions = pathname.startsWith("/sessions");
 
   return (
     <DropdownMenu>
@@ -29,7 +32,11 @@ export default function ProfileBtn() {
         {token ? (
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <Link href={"/sessions"}>My sessions</Link>
+              {onSessions ? (
+                <Link href="/">Home</Link>
+              ) : (
+                <Link href="/sessions">My sessions</Link>
+              )}
             </DropdownMenuItem>
             <DropdownMenuItem className="text-red-400" onClick={logout}>
               Logout
