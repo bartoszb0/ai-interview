@@ -1,24 +1,37 @@
+import { getMeCall, logoutCall } from "@/lib/api/auth";
+import { toast } from "sonner";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 type AuthStore = {
-  token: string | null;
+  isAuthenticated: boolean;
   userEmail: string | null;
-  login: (token: string, userEmail: string) => void;
+  isLoading: boolean;
+  login: (email: string) => void;
   logout: () => void;
+  checkAuth: () => Promise<void>;
 };
 
-export const useAuthStore = create<AuthStore>()(
-  persist(
-    (set) => ({
-      token: null,
-      userEmail: null,
-      login: (token, userEmail) => set({ token, userEmail }),
-      logout: () => {
-        set({ token: null, userEmail: null });
-        window.location.href = "/";
-      },
-    }),
-    { name: "auth-store" },
-  ),
-);
+export const useAuthStore = create<AuthStore>()((set) => ({
+  isAuthenticated: false,
+  userEmail: null,
+  isLoading: true,
+  login: (email) => set({ isAuthenticated: true, userEmail: email }),
+  logout: async () => {
+    try {
+      await logoutCall();
+    } catch {
+      // Cookie will expire regardless
+    }
+    set({ isAuthenticated: false, userEmail: null });
+    toast.success("Logged out successfully.");
+    window.location.href = "/";
+  },
+  checkAuth: async () => {
+    try {
+      const res = await getMeCall();
+      set({ isAuthenticated: true, userEmail: res.email, isLoading: false });
+    } catch {
+      set({ isAuthenticated: false, userEmail: null, isLoading: false });
+    }
+  },
+}));
