@@ -84,11 +84,10 @@ export default function AnswerInput() {
 
       <Button
         onClick={evaluateAnswer}
-        disabled={!answer.trim()}
-        isLoading={isEvaluating}
+        disabled={isEvaluating || !answer.trim()}
         className="w-full bg-primary hover:bg-primary/90 text-primary-foreground border-0"
       >
-        Submit Answer
+        {isEvaluating ? "Evaluating…" : "Submit Answer"}
       </Button>
     </div>
   );

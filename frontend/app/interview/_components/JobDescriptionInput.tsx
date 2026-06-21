@@ -45,11 +45,10 @@ export default function JobDescriptionInput() {
 
           <Button
             onClick={generateQuestions}
-            isLoading={isGenerating}
-            disabled={!jobDescription.description.trim()}
+            disabled={isGenerating || !jobDescription.description.trim()}
             className="bg-primary hover:bg-primary/90 text-primary-foreground border-0"
           >
-            Generate Questions
+            {isGenerating ? "Generating…" : "Generate Questions"}
           </Button>
         </div>
       </div>
