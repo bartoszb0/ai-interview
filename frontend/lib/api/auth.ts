@@ -19,3 +19,11 @@ export function loginCall(data: LoginFormData) {
     body: JSON.stringify({ email: data.email, password: data.password }),
   });
 }
+
+export function logoutCall() {
+  return apiClient("/auth/logout", { method: "POST" });
+}
+
+export function getMeCall() {
+  return apiClient("/auth/me");
+}
