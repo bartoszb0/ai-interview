@@ -15,7 +15,8 @@ export default function SummaryScreen() {
   const reset = useInterviewStore((state) => state.reset);
   const [isSummarizing, setIsSummarizing] = useState(true);
   const [summary, setSummary] = useState<Summary>();
-  const token = useAuthStore((state) => state.token);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isAuthLoading = useAuthStore((state) => state.isLoading);
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -79,7 +80,7 @@ export default function SummaryScreen() {
       </div>
 
       <div className="flex flex-col gap-4">
-        {token && <SaveSessionBtn summary={summary} />}
+        {!isAuthLoading && isAuthenticated && <SaveSessionBtn summary={summary} />}
 
         <Button
           onClick={reset}

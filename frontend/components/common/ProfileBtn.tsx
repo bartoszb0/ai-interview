@@ -16,7 +16,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function ProfileBtn() {
-  const token = useAuthStore((state) => state.token);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isLoading = useAuthStore((state) => state.isLoading);
   const logout = useAuthStore((state) => state.logout);
   const pathname = usePathname();
   const onSessions = pathname.startsWith("/sessions");
@@ -29,30 +30,34 @@ export default function ProfileBtn() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="rounded-none cursor-pointer">
-        {token ? (
-          <DropdownMenuGroup>
-            <DropdownMenuItem asChild>
-              {onSessions ? (
-                <Link href="/">Home</Link>
-              ) : (
-                <Link href="/sessions">My sessions</Link>
-              )}
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-400" onClick={logout}>
-              Logout
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-        ) : (
-          <DropdownMenuGroup>
-            <DropdownMenuItem asChild>
-              <Link href={"/login"}>Login</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href={"/register"}>Register</Link>
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
+        {!isLoading && (
+          <>
+            {isAuthenticated ? (
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  {onSessions ? (
+                    <Link href="/">Home</Link>
+                  ) : (
+                    <Link href="/sessions">My sessions</Link>
+                  )}
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-red-400" onClick={logout}>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            ) : (
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link href={"/login"}>Login</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={"/register"}>Register</Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            )}
+            <DropdownMenuSeparator />
+          </>
         )}
-        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <ThemeToggle />
