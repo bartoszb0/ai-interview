@@ -29,7 +29,7 @@ export default function Register() {
   async function onSubmit(data: RegisterFormData) {
     try {
       const res = await registerCall(data);
-      login(res.access_token, res.email);
+      login(res.email);
       router.push("/");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Registration failed");
