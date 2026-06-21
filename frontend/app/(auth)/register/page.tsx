@@ -13,12 +13,14 @@ import { useAuthStore } from "@/store/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function Register() {
   const router = useRouter();
   const login = useAuthStore((state) => state.login);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   const {
     register,
@@ -30,6 +32,7 @@ export default function Register() {
     try {
       const res = await registerCall(data);
       login(res.email);
+      setIsRedirecting(true);
       router.push("/");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Registration failed");
@@ -83,8 +86,13 @@ export default function Register() {
               </p>
             )}
           </div>
-          <Button className="w-full mt-2" disabled={isSubmitting}>
-            {isSubmitting ? "Creating account…" : "Create account"}
+          <Button
+            className="w-full mt-2"
+            disabled={isSubmitting || isRedirecting}
+          >
+            {isSubmitting || isRedirecting
+              ? "Creating account…"
+              : "Create account"}
           </Button>
         </form>
         <p className="text-center text-sm text-muted-foreground mt-2">

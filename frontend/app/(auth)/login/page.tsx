@@ -10,12 +10,14 @@ import { useAuthStore } from "@/store/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function Login() {
   const router = useRouter();
   const login = useAuthStore((s) => s.login);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   const {
     register,
@@ -26,6 +28,7 @@ export default function Login() {
   async function onSubmit(data: LoginFormData) {
     try {
       const res = await loginCall(data);
+      setIsRedirecting(true);
       login(res.email);
       router.push("/");
     } catch (err) {
@@ -66,8 +69,11 @@ export default function Login() {
               </p>
             )}
           </div>
-          <Button className="w-full mt-2" disabled={isSubmitting}>
-            {isSubmitting ? "Signing in…" : "Sign in"}
+          <Button
+            className="w-full mt-2"
+            disabled={isSubmitting || isRedirecting}
+          >
+            {isSubmitting || isRedirecting ? "Signing in…" : "Sign in"}
           </Button>
         </form>
         <p className="text-center text-sm text-muted-foreground mt-2">
