@@ -1,5 +1,4 @@
 import { getMeCall, logoutCall } from "@/lib/api/auth";
-import { toast } from "sonner";
 import { create } from "zustand";
 
 type AuthStore = {
@@ -7,7 +6,7 @@ type AuthStore = {
   userEmail: string | null;
   isLoading: boolean;
   login: (email: string) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 };
 
@@ -23,8 +22,6 @@ export const useAuthStore = create<AuthStore>()((set) => ({
       // Cookie will expire regardless
     }
     set({ isAuthenticated: false, userEmail: null });
-    toast.success("Logged out successfully.");
-    window.location.href = "/";
   },
   checkAuth: async () => {
     try {

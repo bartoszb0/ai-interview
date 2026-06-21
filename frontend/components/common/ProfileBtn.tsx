@@ -13,7 +13,8 @@ import {
 import { useAuthStore } from "@/store/auth-store";
 import { User } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function ProfileBtn() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -21,6 +22,13 @@ export default function ProfileBtn() {
   const logout = useAuthStore((state) => state.logout);
   const pathname = usePathname();
   const onSessions = pathname.startsWith("/sessions");
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    toast.success("Logged out succesfully.");
+    router.push("/");
+  };
 
   return (
     <DropdownMenu>
@@ -41,7 +49,10 @@ export default function ProfileBtn() {
                     <Link href="/sessions">My sessions</Link>
                   )}
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-400" onClick={logout}>
+                <DropdownMenuItem
+                  className="text-red-400"
+                  onClick={handleLogout}
+                >
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuGroup>
