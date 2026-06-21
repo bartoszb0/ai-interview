@@ -80,7 +80,9 @@ export default function SummaryScreen() {
       </div>
 
       <div className="flex flex-col gap-4">
-        {!isAuthLoading && isAuthenticated && <SaveSessionBtn summary={summary} />}
+        {!isAuthLoading && isAuthenticated && (
+          <SaveSessionBtn summary={summary} />
+        )}
 
         <Button
           onClick={reset}
