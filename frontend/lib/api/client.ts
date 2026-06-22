@@ -10,12 +10,12 @@ export async function apiClient(endpoint: string, options: RequestInit = {}) {
     },
   });
 
-  if (!response.ok) {
+  if (!response.ok && response.status !== 304) {
     const error = await response.json();
     throw new Error(error.message);
   }
 
-  if (response.status === 204) return;
+  if (response.status === 204 || response.status === 304) return;
 
   return response.json();
 }
